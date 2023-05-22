@@ -51,43 +51,174 @@ let registrationDate = prompt('Ingrese la fecha de registro de su derecho de pro
 let result = calculateExpiration(propertyRight, registrationDate);
 alert(result);
 
-function Product(name, price) {
+function Product(name, price, id) {
     this.name = name;
     this.price = price;
- }
+    this.id = id;
+}
   
-function Service(name, description, price) {
+function Service(name, price, description, id) {
     this.name = name;
     this.description = description;
-    this.price = price;    
+    this.price = price;
+    this.id = id;    
 }
 let products = [
-    new Product("Artículo sobre el proceso de registro de una marca", 5),
-    new Product("Artículo sobre el proceso de registro de una patente", 10),
-    new Product("Artículo sobre el registro de un dominio", 5),
+    new Product(
+        "Artículo sobre el proceso de registro de una marca", 
+        5, 
+        "P1"
+    ),
+    new Product(
+        "Artículo sobre el proceso de registro de una patente", 
+        10,
+        "P2"
+    ),
+    new Product(
+        "Artículo sobre el registro de un dominio", 
+        5,
+        "P3"
+    )
 ];
 let services = [
     new Service(
       "Búsqueda de identidad de marcas completa",
       100,
-      "Incluye análisis de registrabilidad"
+      "Incluye análisis de registrabilidad",
+      "S1"
     ),
     new Service(
       "Búsqueda de identidad de marcas simple",
       50,
-      "Incluye únicamente un listado de identidad de marcas"
-    ),
+      "Incluye únicamente un listado de identidad de marcas",
+      "S2"
+    )
 ];
-let message = "Ofrecemos los siguientes productos y servicios:\n\n";
-message += "PRODUCTOS:\n";
-for (let i = 0; i < products.length; i++) {
-    message += `${i + 1}. ${products[i].name} - USD ${products[i].price}\n`;
+
+let cart = []
+
+function generateMessage(products, services, formatProdutcs, formatServices) {
+    let message = "Ofrecemos los siguientes productos y servicios:\n\n";
+    message = message.concat(formatProdutcs(products), formatServices(services));
+    alert(message);
+
+    let selection = prompt("Ingrese el ID del producto o servicio que desea agregar al carrito (separe los IDs por comas si desea agregar varios):")
+
+    if (selection) {
+        let ids = selection.split(",");
+        ids.forEach((id) => {
+            let selectedProduct = products.find((product) => product.id === id.trim());
+            let selectedService = services.find((service) => service.id === id.trim());
+            
+            if (selectedProduct) {
+                cart.push(selectedProduct);
+            } else if (selectedService) {
+                cart.push(selectedService)
+            }
+        });
+
+        alert("Los productos y servicios seleccionados han sido agregados al carrito");
+
+        showCart();
+    }
 }
-message += "\nSERVICIOS:\n";
-for (let i = 0; i < services.length; i++) {
-    message += `${i + 1}. ${services[i].name}, USD ${services[i].description} (${services[i].price})\n `;
+
+function calculateTotal() {
+    let subtotal = cart.reduce((accumulator, item) => {
+        if (item instanceof Product) {
+            return accumulator + item.price;
+        } else if (item instanceof Service) {
+            return accumulator + item.price;
+        }
+    }, 0);
+
+    let iva = subtotal * 0.19; 
+
+    let total = subtotal + iva;
+
+    total = Math.round(total);
+
+    return total;
 }
-alert(message);
+
+function showCart() {
+    let cartMessage = "Productos agregados al carrito:\n";
+    cart.forEach((item, index) => {
+        if (item instanceof Product) {
+            cartMessage += `${index + 1}. Producto: ${item.name} - USD ${item.price}\n`;
+        } else if (item instanceof Service) {
+            cartMessage += `${index + 1}. Servicio: ${item.name} - USD ${item.price}\n`;
+        }
+    });
+
+    alert(cartMessage);
+
+    let total = calculateTotal();
+    let totalMessage = `Monto total a pagar (incluido el 19% de IVA): USD ${total}`;
+    alert(totalMessage);
+}
 
 
+function formatProducts(products) {
+    let formattedMessage = "PRODUCTOS:\n";
+    products.forEach((product, index) => {
+        formattedMessage += `${index + 1}. ${product.name} - USD ${product.price} (ID: ${product.id})\n` ;        
+    });
+    return formattedMessage;
+}
+
+function formatServices(services) {
+    let formattedMessage = "\nSERVICIOS:\n";
+    services.forEach((service, index) => {
+        formattedMessage += `${index + 1}. ${service.name} (${service.description}) - USD ${service.price} (ID: ${service.id})\n`;            
+    });
+    return formattedMessage;
+}
+
+products.push(
+    new Product(
+        "Artículos especializados sobre marcas comerciales", 
+        25,
+        "P4"
+    ),
+    new Product(
+        "Ensayos y estudios de casos", 
+        50,
+        "P5"
+    ),
+    new Product(
+        "Libros electrónicos sobre estrategias de protección de marcas", 
+        99,
+        "P6"
+    )
+);
+
+services.push(
+    new Service(
+        "Evaluación de fortaleza distintiva de una marca propuesta",
+        250,
+        "por evaluación",
+        "S3"
+    ),
+    new Service(
+        "Orientación sobre requisitos legales y pasos para el registro", 
+        150,
+        "por consulta",
+        "S4"
+    ),
+    new Service(
+        "Recomendaciones de estrategias de protección de marcas", 
+        200,
+        "por recomendación",
+        "S5"
+    ),
+    new Service(
+        "Consejos para la redacción y presentación de solicitudes", 
+        100,
+        "por sesión de asesoramiento",
+        "S6"
+    )
+)
+
+generateMessage(products, services, formatProducts, formatServices);
 
