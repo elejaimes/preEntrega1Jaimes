@@ -47,7 +47,7 @@ let calculateExpiration = (propertyRight, registrationDate) => {
     }
 }
 let propertyRight = prompt('¿Qué tipo de derecho industrial desea calcular su fecha de vencimiento? \nPatente \nDiseño Industrial \nModelo de Utilidad \nMarca');
-let registrationDate = prompt('Ingrese la fecha de registro de su derecho de propiedad insdustrial en formalo dd/mm/aaaa:');
+let registrationDate = prompt('Ingrese la fecha de registro de su derecho de propiedad industrial en formalo dd/mm/aaaa:');
 let result = calculateExpiration(propertyRight, registrationDate);
 alert(result);
 
