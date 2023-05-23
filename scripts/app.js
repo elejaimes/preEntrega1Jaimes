@@ -1,5 +1,3 @@
-//declara funciones
-
 const greeting = () => {
     let fullName = prompt('Por favor, ingrese su primer nombre y su primer apellido');
     let nameSurname = fullName.split(' ');
