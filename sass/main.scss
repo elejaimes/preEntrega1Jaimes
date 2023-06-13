@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
 
 // Estilos generales
 
@@ -12,93 +11,84 @@ ol {
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #000000;
-    color: #faebd7;
+  font-family: "Roboto", sans-serif;
+  background-color: #000000;
+  color: #faebd7;
 }
 
 header {
-    min-height: 25px;
-    .cart-icon {
-        width: 40px;
-        height: 40px;
-    }
+  min-height: 25px;
+  .cart-icon {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 .container {
-    margin-top: 50px;
-    fieldset {
-        margin-left: 300px;
-        flex-wrap: nowrap;
-    }
-    legend {
-        width: 300px;
-        font-size: 1.2rem;
-        font-weight: 700;
-    }
+  margin-top: 50px;
+  fieldset {
+    flex-wrap: nowrap;
+  }
+  legend {
+    width: 300px;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
 }
 
 h2 {
-    font-size: 3rem;
-    font-weight: 700;
-    margin: 20px auto;
-    text-align: center;
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 20px auto;
+  text-align: center;
 }
 
 h3 {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .text-container {
-    height: 300px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
-
 .deadline-container {
-    .form-control {
-        width: auto;
-    }
-    #vencimientos-form {
-        margin-left: 400px;
-        button {
-            margin-left: 100px;
-        }
-        
-    }
+  .form-control {
+    width: auto;
+  }
 }
 
 .contacto {
-    .form-label{
-        font-size: 1.5rem;
-        font-weight: 700;
-    }
-    .form-text {
-        color: #ffe4c4;
-    }
+  .form-label {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  .form-text {
+    color: #ffe4c4;
+  }
 }
 
 .footer {
+  color: #000000;
+  margin-top: 50px;
+  ul {
+    list-style: none;
+  }
+  h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+  .bi {
     color: #000000;
-    margin-top: 50px;
-    ul {
-        list-style: none;
-    }
-    h4 {
-        font-size: 1.1rem;
-        font-weight: 700;
-    }
-    .bi {
-        color: #000000;
-        font-size: 1.5rem;
-        display: flex;
-        flex-direction: column;
-        margin: 10px;
-    }
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+  }
 }

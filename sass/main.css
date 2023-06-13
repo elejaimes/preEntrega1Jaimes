@@ -29,7 +29,6 @@ header .cart-icon {
   margin-top: 50px;
 }
 .container fieldset {
-  margin-left: 300px;
   flex-wrap: nowrap;
 }
 .container legend {
@@ -58,12 +57,6 @@ h3 {
 
 .deadline-container .form-control {
   width: auto;
-}
-.deadline-container #vencimientos-form {
-  margin-left: 400px;
-}
-.deadline-container #vencimientos-form button {
-  margin-left: 100px;
 }
 
 .contacto .form-label {
