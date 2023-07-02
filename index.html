@@ -22,15 +22,6 @@
       <nav class="navbar bg-body-tertiary fixed-top">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">IPMaximizer</a>
-          <form id="btn-search" class="d-flex mt-3" role="search">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-light" type="submit">Buscar</button>
-          </form>
           <button
             class="navbar-toggler"
             type="button"
@@ -73,6 +64,9 @@
                 <p>Total: <span id="cartTotal">$0.00</span></p>
               </div>
               <div class="d-flex justify-content-end">
+                <button id="clearCartButton" class="btn btn-danger">
+                  Vaciar Carrito
+                </button>
                 <button id="buyButton" class="btn btn-dark">Comprar</button>
               </div>
             </div>
@@ -82,22 +76,24 @@
     </header>
 
     <main id="main">
-      <article class="text-container container">
+      <article class="main-text">
         <h1>
           Desbloquea tu ventaja competitiva: Experiencia estratégica en
           Propiedad Industrial a tu alcance
         </h1>
         <a href="#contacto"
-          ><button class="btn btn-light" type="submit">Contáctanos</button></a
+          ><button class="btn btn-light btn-contact" type="submit">
+            Contáctanos
+          </button></a
         >
       </article>
 
-      <section class="products-container container">
+      <section class="products-container">
         <h2>PRODUCTOS</h2>
         <div id="productList" class="row justify-content-md-center gap-2"></div>
       </section>
 
-      <section class="services-container container">
+      <section class="services-container">
         <h2>SERVICIOS</h2>
         <div
           id="serviceList"

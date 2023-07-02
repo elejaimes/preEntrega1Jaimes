@@ -1,37 +1,41 @@
+// Función auxiliar para obtener el formato deseado de los nombres de los derechos de propiedad
+const getFormattedPropertyRight = (propertyRight) => {
+  const propertyRightMap = {
+    marca: "Marca",
+    patente: "Patente",
+    "diseno-industrial": "Diseño Industrial",
+    "modelo-utilidad": "Modelo de Utilidad",
+  };
+  return propertyRightMap[propertyRight] || propertyRight;
+};
+
+// Estructura de datos para definir los periodos de vencimiento de los derechos de propiedad
+const expirationPeriods = {
+  marca: 10,
+  patente: 20,
+  "diseno-industrial": 15,
+  "modelo-utilidad": 10,
+};
+
 // Función para calcular la fecha de vencimiento de un derecho de propiedad industrial
 const calculateExpiration = (propertyRight, registrationDate) => {
   const registrationDateObj = new Date(registrationDate);
-  let deadline;
-  switch (propertyRight) {
-    case "marca":
-      deadline = new Date(
-        registrationDateObj.getFullYear() + 10,
-        registrationDateObj.getMonth(),
-        registrationDateObj.getDate()
-      );
-      break;
-    case "patente":
-      deadline = new Date(
-        registrationDateObj.getFullYear() + 20,
-        registrationDateObj.getMonth(),
-        registrationDateObj.getDate()
-      );
-      break;
-    case "diseno-industrial":
-      deadline = new Date(
-        registrationDateObj.getFullYear() + 15,
-        registrationDateObj.getMonth(),
-        registrationDateObj.getDate()
-      );
-      break;
-    case "modelo-utilidad":
-      deadline = new Date(
-        registrationDateObj.getFullYear() + 10,
-        registrationDateObj.getMonth(),
-        registrationDateObj.getDate()
-      );
-      break;
+  const expirationYears = expirationPeriods[propertyRight];
+
+  if (expirationYears === undefined) {
+    throw new Error(`Derecho de propiedad desconocido: ${propertyRight}`);
   }
+
+  if (isNaN(registrationDateObj)) {
+    return `Ingrese una Fecha de Registro válida.`;
+  }
+
+  const deadline = new Date(
+    registrationDateObj.getFullYear() + expirationYears,
+    registrationDateObj.getMonth(),
+    registrationDateObj.getDate()
+  );
+
   const today = new Date();
   const expired = today > deadline;
 
@@ -46,121 +50,27 @@ const calculateExpiration = (propertyRight, registrationDate) => {
   }
 };
 
-// Función auxiliar para obtener el formato deseado de los nombres de los derechos de propiedad
-const getFormattedPropertyRight = (propertyRight) => {
-  const propertyRightMap = {
-    marca: "Marca",
-    patente: "Patente",
-    "diseno-industrial": "Diseño Industrial",
-    "modelo-utilidad": "Modelo de Utilidad",
-  };
-  return propertyRightMap[propertyRight] || propertyRight;
-};
-
 // Evento de envío del formulario
-const formVencimientos = document
+const submitButton = document
   .querySelector("#vencimientos-form")
-  .addEventListener("submit", function (event) {
+  .addEventListener("submit", async function (event) {
     event.preventDefault(); // Evita que el formulario se envíe
-
     // Captura los valores ingresados en el formulario
     const propertyRight = document.querySelector(
       'input[name="gridRadios"]:checked'
     ).value;
     const registrationDate = document.querySelector("#inputDate").value;
+    try {
+      // Llama a la función calculateExpiration con los valores capturados
+      const result = await calculateExpiration(propertyRight, registrationDate);
 
-    // Llama a la función calculateExpiration con los valores capturados
-    const result = calculateExpiration(propertyRight, registrationDate);
-
-    // Muestra el resultado en el DOM
-    const resultContainer = document.querySelector("#resultContainer");
-    resultContainer.textContent = result;
+      // Muestra el resultado en el DOM
+      const resultContainer = document.querySelector("#resultContainer");
+      resultContainer.textContent = result;
+    } catch (error) {
+      console.error("Error al calcular la expiración:", error);
+    }
   });
-
-// Definir una clase Product para representar un producto
-
-function Product(name, price, description, image, id) {
-  this.name = name;
-  this.price = price;
-  this.description = description;
-  this.image = image;
-  this.id = id;
-}
-
-// Definir una clase Service para representar un servicio
-
-function Service(name, price, description, image, id) {
-  this.name = name;
-  this.price = price;
-  this.description = description;
-  this.image = image;
-  this.id = id;
-}
-
-// Crear una lista de productos y servicios
-
-const products = [
-  new Product(
-    "Propiedad Industrial e Intelectual",
-    50,
-    "Libro Físico",
-    "./images/img-p1.jpg",
-    "P1"
-  ),
-  new Product(
-    "Manual de Propiedad Industrial",
-    85,
-    "Libro Digital",
-    "./images/img-p2.jpg",
-    "P2"
-  ),
-  new Product(
-    "La Propiedad Intelectual en la Era Digital",
-    45,
-    "Libro Físico",
-    "./images/img-p3.jpg",
-    "P3"
-  ),
-  new Product(
-    "¡Quiero esta marca!",
-    100,
-    "Libro Físico",
-    "./images/img-p4.jpg",
-    "P4"
-  ),
-  new Product("Totem", 90, "Libro Físico", "./images/img-p5.jpg", "P5"),
-];
-
-const services = [
-  new Service(
-    "Búsqueda de identidad de marcas simple",
-    50,
-    "Incluye únicamente un listado de identidad de marcas",
-    "./images/img-sv1.jpg",
-    "S1"
-  ),
-  new Service(
-    "Búsqueda de identidad de marcas completa",
-    150,
-    "Incluye análisis de registrabilidad con indicación de chances de éxito",
-    "./images/img-sv2.jpg",
-    "S2"
-  ),
-  new Service(
-    "Orientación sobre requisitos legales y pasos para el registro",
-    300,
-    "Registro de marcas fácil y seguro con nuestra ayuda",
-    "./images/img-sv3.jpg",
-    "S3"
-  ),
-  new Service(
-    "Evaluación de fortaleza distintiva de una marca propuesta",
-    250,
-    "Análisis de la distintividad y viabilidad de marca",
-    "./images/img-sv4.jpg",
-    "S4"
-  ),
-];
 
 const productListElement = document.querySelector("#productList");
 const serviceListElement = document.querySelector("#serviceList");
@@ -187,6 +97,14 @@ function addToCartProduct(product) {
   localStorage.setItem("cart", JSON.stringify(cart));
 
   updateCartUI();
+
+  Swal.fire({
+    icon: "success",
+    title: "Producto agregado al carrito",
+    showConfirmButton: false,
+    timer: 1000,
+    timerProgressBar: true,
+  });
 }
 
 function addToCartService(service) {
@@ -199,12 +117,21 @@ function addToCartService(service) {
   localStorage.setItem("cart", JSON.stringify(cart));
 
   updateCartUI();
+
+  Swal.fire({
+    icon: "success",
+    title: "Servicio agregado al carrito",
+    showConfirmButton: false,
+    timer: 1000,
+    timerProgressBar: true,
+  });
 }
 
 // Función para generar un elemento de carrito
 function generateCartItemElement(item) {
   const cartItem = document.createElement("li");
   cartItem.classList.add("nav-item");
+  cartItem.setAttribute("id", `cartItem-${item.id}`);
 
   const name = document.createElement("h5");
   name.textContent = item.name;
@@ -216,21 +143,65 @@ function generateCartItemElement(item) {
   cartItem.appendChild(price);
 
   const quantity = document.createElement("p");
+  quantity.classList.add("quantity");
   quantity.textContent = `Cantidad: ${item.quantity}`;
   cartItem.appendChild(quantity);
 
-  // Botón de eliminar
-  const removeButton = document.createElement("button");
-  removeButton.classList.add("remove-from-cart", "btn", "btn-dark");
-  removeButton.textContent = "Eliminar";
-  cartItem.appendChild(removeButton);
+  // Botón de disminuir cantidad
+  const decreaseButton = document.createElement("button");
+  decreaseButton.classList.add("decrease-quantity", "btn", "btn-dark");
+  const decreaseIcon = document.createElement("i");
+  decreaseIcon.classList.add("bi", "bi-dash-circle");
+  decreaseButton.appendChild(decreaseIcon);
+  cartItem.appendChild(decreaseButton);
 
-  // Event listener para eliminar el elemento del carrito
-  removeButton.addEventListener("click", () => {
-    removeFromCart(item);
+  // Event listener para disminuir la cantidad
+  decreaseButton.addEventListener("click", () => {
+    decreaseQuantity(item);
+  });
+
+  // Botón de aumentar cantidad
+  const increaseButton = document.createElement("button");
+  increaseButton.classList.add("increase-quantity", "btn", "btn-dark");
+  const increaseIcon = document.createElement("i");
+  increaseIcon.classList.add("bi", "bi-plus-circle");
+  increaseButton.appendChild(increaseIcon);
+  cartItem.appendChild(increaseButton);
+
+  // Event listener para aumentar la cantidad
+  increaseButton.addEventListener("click", () => {
+    increaseQuantity(item);
   });
 
   return cartItem;
+}
+
+// Función para aumentar la cantidad del elemento en el carrito
+function increaseQuantity(item) {
+  item.quantity++;
+  updateCartItemQuantity(item);
+  updateCartStorage();
+}
+
+// Función para disminuir la cantidad del elemento en el carrito
+function decreaseQuantity(item) {
+  if (item.quantity > 1) {
+    item.quantity--;
+    updateCartItemQuantity(item);
+    updateCartStorage();
+  } else {
+    Swal.fire({
+      title: "¿Desea eliminar este producto del carrito?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Confirmar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        removeFromCart(item);
+      }
+    });
+  }
 }
 
 // Función para eliminar elemento del carrito
@@ -246,6 +217,20 @@ function removeFromCart(item) {
 
   localStorage.setItem("cart", JSON.stringify(cart));
   updateCartUI();
+}
+
+// Función para actualizar la cantidad en el elemento del carrito
+function updateCartItemQuantity(item) {
+  const cartItem = document.getElementById(`cartItem-${item.id}`);
+  if (cartItem) {
+    const quantityElement = cartItem.querySelector("p.quantity");
+    quantityElement.textContent = `Cantidad: ${item.quantity}`;
+  }
+}
+
+// Función para actualizar el carrito en el almacenamiento local
+function updateCartStorage() {
+  localStorage.setItem("cart", JSON.stringify(cart));
 }
 
 // Función para actualizar los elementos del carrito en la interfaz
@@ -319,18 +304,12 @@ function handleBuyButtonClick() {
 
   const productMessage =
     productList.length > 0
-      ? `Muchas gracias por tu compra. Has comprado los productos: ${productList
-          .map((item) => item.outerHTML)
-          .join(" ")}.`
-      : "";
-  const serviceMessage =
-    serviceList.length > 0
-      ? `Has adquirido los servicios: ${serviceList
+      ? `¡Gracias por tu compra! Estamos emocionados de entregarte pronto tus productos o servicios. Aquí tienes una lista de las cosas que has adquirido: ${productList
           .map((item) => item.outerHTML)
           .join(" ")}.`
       : "";
 
-  const purchaseMessage = `${productMessage} ${serviceMessage}`;
+  const purchaseMessage = `${productMessage}`;
 
   // Vaciar el carrito
   cart = [];
@@ -346,181 +325,154 @@ function handleBuyButtonClick() {
   }
 }
 
+// Función para vaciar el carrito
+function clearCart() {
+  cart = [];
+  localStorage.removeItem("cart");
+  updateCartUI();
+}
+
 // Asignar evento click al botón de compra
 const buyButton = document.querySelector("#buyButton");
 buyButton.addEventListener("click", handleBuyButtonClick);
 
+// Asignar evento click al botón de vaciar carrito
+const clearCartButton = document.querySelector("#clearCartButton");
+clearCartButton.addEventListener("click", clearCart);
+
 // Actualizar elementos del carrito en la interfaz al cargar la página
 updateCartUI();
 
-// Generar tarjetas de productos
+let products = [];
+let services = [];
 
-products.forEach((product) => {
-  generateProductCard(product);
-});
+async function loadData() {
+  try {
+    const productsResponse = await fetch("./products.json");
+    const servicesResponse = await fetch("./services.json");
 
-// Función para generar una tarjeta de producto
+    products = await productsResponse.json();
+    services = await servicesResponse.json();
 
-function generateProductCard(product) {
-  const card = document.createElement("div");
-  card.classList.add("product-card", "col-sm-12", "col-lg-4", "card");
-
-  const image = document.createElement("img");
-  image.src = product.image;
-  image.classList.add("card-img-top");
-  card.appendChild(image);
-
-  const cardBody = document.createElement("div");
-  cardBody.classList.add("card-body");
-
-  const name = document.createElement("h5");
-  name.classList.add("card-title");
-  name.textContent = product.name;
-  cardBody.appendChild(name);
-
-  const description = document.createElement("p");
-  description.classList.add("card-text");
-  description.textContent = product.description;
-  cardBody.appendChild(description);
-
-  const price = document.createElement("p");
-  price.classList.add("card-text", "price");
-  price.textContent = `$${product.price}`;
-  cardBody.appendChild(price);
-
-  const cardFooter = document.createElement("div");
-  cardFooter.classList.add("card-body");
-
-  const addToCartButton = document.createElement("button");
-  addToCartButton.classList.add("add-to-cart", "btn", "btn-dark");
-  addToCartButton.textContent = "Agregar al carrito";
-  cardFooter.appendChild(addToCartButton);
-
-  cardBody.appendChild(cardFooter);
-
-  card.appendChild(cardBody);
-
-  productListElement.appendChild(card);
-
-  // Event listener para agregar el producto al carrito
-  addToCartButton.addEventListener("click", () => {
-    addToCartProduct(product);
-  });
-}
-
-// Generar tarjetas de servicios
-
-services.forEach((service) => {
-  generateServiceCard(service);
-});
-
-// Función para generar una tarjeta de servicio
-
-function generateServiceCard(service) {
-  const card = document.createElement("div");
-  card.classList.add("service-card", "col-sm-12", "col-lg-4", "card");
-
-  const image = document.createElement("img");
-  image.src = service.image;
-  image.classList.add("card-img-top");
-  card.appendChild(image);
-
-  const cardBody = document.createElement("div");
-  cardBody.classList.add("card-body");
-
-  const name = document.createElement("h5");
-  name.classList.add("card-title");
-  name.textContent = service.name;
-  cardBody.appendChild(name);
-
-  const description = document.createElement("p");
-  description.classList.add("card-text");
-  description.textContent = service.description;
-  cardBody.appendChild(description);
-
-  const price = document.createElement("p");
-  price.classList.add("card-text", "price");
-  price.textContent = `$${service.price}`;
-  cardBody.appendChild(price);
-
-  const cardFooter = document.createElement("div");
-  cardFooter.classList.add("card-body");
-
-  const addToCartButton = document.createElement("button");
-  addToCartButton.classList.add("add-to-cart", "btn", "btn-dark");
-  addToCartButton.textContent = "Agregar al carrito";
-  cardFooter.appendChild(addToCartButton);
-
-  cardBody.appendChild(cardFooter);
-
-  card.appendChild(cardBody);
-
-  serviceListElement.appendChild(card);
-
-  // Event listener para agregar el servicio al carrito
-  addToCartButton.addEventListener("click", () => {
-    addToCartService(service);
-  });
-}
-
-// Función para renderizar los resultados de búsqueda
-function renderSearchResults(results) {
-  productListElement.innerHTML = "";
-  serviceListElement.innerHTML = "";
-
-  if (results.products.length > 0 || results.services.length > 0) {
-    results.products.forEach((product) => {
-      generateProductCard(product);
-    });
-
-    results.services.forEach((service) => {
-      generateServiceCard(service);
-    });
-  } else {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "No se encontraron productos o servicios que coincidan con la búsqueda, por favor ingrese otro parámetro de búsqueda.",
-    });
+    generateProductCards();
+    generateServiceCards();
+  } catch (error) {
+    console.error("Error al cargar los datos:", error);
   }
 }
 
-// Función de búsqueda
-function buscar(event) {
-  event.preventDefault();
+loadData();
 
-  const searchTerm = searchInput.value.toLowerCase();
+function generateProductCards() {
+  products.forEach((product) => {
+    const card = document.createElement("div");
+    card.classList.add(
+      "product-card",
+      "col-sm-12",
+      "col-md-3",
+      "col-lg-2",
+      "card"
+    );
 
-  // Filtrar los productos y servicios que coincidan con el término de búsqueda
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchTerm)
-  );
+    const image = document.createElement("img");
+    image.src = product.image;
+    image.classList.add("card-img-top");
+    card.appendChild(image);
 
-  const filteredServices = services.filter((service) =>
-    service.name.toLowerCase().includes(searchTerm)
-  );
+    const cardBody = document.createElement("div");
+    cardBody.classList.add("card-body");
 
-  // Crear un objeto con los resultados de búsqueda
-  const searchResults = {
-    products: filteredProducts,
-    services: filteredServices,
-  };
+    const name = document.createElement("h5");
+    name.classList.add("card-title");
+    name.textContent = product.name;
+    cardBody.appendChild(name);
 
-  // Renderizar los resultados de búsqueda
-  renderSearchResults(searchResults);
+    const description = document.createElement("p");
+    description.classList.add("card-text");
+    description.textContent = product.description;
+    cardBody.appendChild(description);
+
+    const price = document.createElement("p");
+    price.classList.add("card-text", "price");
+    price.textContent = `$${product.price}`;
+    cardBody.appendChild(price);
+
+    const cardFooter = document.createElement("div");
+    cardFooter.classList.add("card-body");
+
+    const addToCartButton = document.createElement("button");
+    addToCartButton.classList.add("add-to-cart", "btn", "btn-dark");
+    addToCartButton.textContent = "Agregar al carrito";
+    cardFooter.appendChild(addToCartButton);
+
+    cardBody.appendChild(cardFooter);
+
+    card.appendChild(cardBody);
+
+    productListElement.appendChild(card);
+
+    addToCartButton.addEventListener("click", () => {
+      addToCartProduct(product);
+    });
+  });
 }
 
-// Evento de escucha del formulario de búsqueda
-const searchForm = document.querySelector("#btn-search");
-const searchInput = document.querySelector(".form-control");
+function generateServiceCards() {
+  services.forEach((service) => {
+    const card = document.createElement("div");
+    card.classList.add(
+      "service-card",
+      "col-sm-12",
+      "col-md-6",
+      "col-lg-4",
+      "card"
+    );
 
-searchForm.addEventListener("submit", buscar);
+    const image = document.createElement("img");
+    image.src = service.image;
+    image.classList.add("card-img-top");
+    card.appendChild(image);
 
-/* const searchForm = document.querySelector('.d-flex');
-searchForm.addEventListener('submit', buscar); */
+    const cardBody = document.createElement("div");
+    cardBody.classList.add("card-body");
+
+    const name = document.createElement("h5");
+    name.classList.add("card-title");
+    name.textContent = service.name;
+    cardBody.appendChild(name);
+
+    const description = document.createElement("p");
+    description.classList.add("card-text");
+    description.textContent = service.description;
+    cardBody.appendChild(description);
+
+    const price = document.createElement("p");
+    price.classList.add("card-text", "price");
+    price.textContent = `$${service.price}`;
+    cardBody.appendChild(price);
+
+    const cardFooter = document.createElement("div");
+    cardFooter.classList.add("card-body");
+
+    const addToCartButton = document.createElement("button");
+    addToCartButton.classList.add("add-to-cart", "btn", "btn-dark");
+    addToCartButton.textContent = "Agregar al carrito";
+    cardFooter.appendChild(addToCartButton);
+
+    cardBody.appendChild(cardFooter);
+
+    card.appendChild(cardBody);
+
+    serviceListElement.appendChild(card);
+
+    addToCartButton.addEventListener("click", () => {
+      addToCartService(service);
+    });
+  });
+}
 
 // Función para capturar la información del formulario y almacenarla en el Local Storage
-function capturarInformacion(event) {
+async function capturarInformacion(event) {
   event.preventDefault(); // Evita que el formulario se envíe
 
   // Obtener los valores de los campos del formulario
@@ -546,7 +498,7 @@ function capturarInformacion(event) {
   storedData.push(informacion);
 
   // Guardar el array en el Local Storage
-  localStorage.setItem("contactData", JSON.stringify(storedData));
+  await localStorage.setItem("contactData", JSON.stringify(storedData));
 
   // Mostrar el mensaje de agradecimiento en la sección correspondiente
   const contactContainer = document.querySelector(".contact-container");

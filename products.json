@@ -1,0 +1,77 @@
+[
+    {
+        "name": "Propiedad Industrial e Intelectual",
+        "price": 50,
+        "description" : "Libro Físico",
+        "image" : "./images/img-p1.jpg",
+        "id" : "P1"
+    },
+
+    {
+        "name": "Manual de Propiedad Industrial",
+        "price": 85,
+        "description" : "Libro Digital",
+        "image" : "./images/img-p2.jpg",
+        "id" : "P2"
+    },
+
+    {
+        "name": "La Propiedad Intelectual en la Era Digital",
+        "price": 45,
+        "description" : "Libro Físico",
+        "image" : "./images/img-p3.jpg",
+        "id" : "P3"
+    },
+
+    {
+        "name": "¡Quiero esta marca!",
+        "price": 100,
+        "description" : "Libro Físico",
+        "image" : "./images/img-p4.jpg",
+        "id" : "P4"
+    },
+
+    {
+        "name": "Totem", 
+        "price": 90, 
+        "description" : "Libro Físico", 
+        "image" : "./images/img-p5.jpg", 
+        "id" : "P5"
+    },
+
+    {
+        "name": "Propiedad Intelectual y Contratos",
+        "price": 60,
+        "description": "Libro Físico",
+        "image": "./images/img-p6.jpg",
+        "id": "P6"
+      },
+      {
+        "name": "Colección de Propiedad Industrial e Intelectual",
+        "price": 75,
+        "description": "Libro Físico",
+        "image": "./images/img-p7.jpg",
+        "id": "P7"
+      },
+      {
+        "name": "Patentes, Marcas y Diseño Industrial",
+        "price": 55,
+        "description": "Libro Físico",
+        "image": "./images/img-p8.jpg",
+        "id": "P8"
+      },
+      {
+        "name": "Derecho de Autor, Nuevas Tecnologías, Cambios Legales y más Cultura para Todos",
+        "price": 95,
+        "description": "Libro Físico",
+        "image": "./images/img-p9.jpg",
+        "id": "P9"
+      },
+      {
+        "name": "La Moda y La Propiedad Intelectual",
+        "price": 70,
+        "description": "Libro Físico",
+        "image": "./images/img-p10.jpg",
+        "id": "P10"
+      }
+]

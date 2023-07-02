@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
 html,
 body,
@@ -23,6 +24,18 @@ header {
 header .cart-icon {
   width: 40px;
   height: 40px;
+}
+
+.main-text {
+  display: flex;
+  background-color: rgba(32, 31, 31, 0.943);
+}
+.main-text h1 {
+  margin: 100px;
+}
+.main-text .btn-contact {
+  margin-top: 250px;
+  margin-right: 20px;
 }
 
 .container {
@@ -84,4 +97,33 @@ h3 {
   display: flex;
   flex-direction: column;
   margin: 10px;
+}
+
+/* Media query para dispositivos móviles */
+@media screen and (max-width: 767px) {
+  /* Estilos específicos para móviles */
+  .container {
+    margin-top: 30px;
+  }
+  .container fieldset {
+    flex-wrap: wrap;
+    max-width: 760px;
+  }
+  .main-text {
+    display: block;
+    text-align: center;
+    background-color: rgba(32, 31, 31, 0.943);
+  }
+  .main-text h1 {
+    margin: 100px 0px 0px 0px;
+  }
+  .main-text .btn-contact {
+    margin: 20px;
+  }
+  h2 {
+    font-size: 2rem;
+  }
+  .footer {
+    margin-top: 30px;
+  }
 }/*# sourceMappingURL=main.css.map */

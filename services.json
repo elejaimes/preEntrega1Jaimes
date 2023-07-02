@@ -1,0 +1,33 @@
+[
+    {
+        "name": "Búsqueda de identidad de marcas simple",
+        "price": 50,
+        "description" : "Incluye únicamente un listado de identidad de marcas",
+        "image" :
+        "./images/img-sv1.jpg", "id" : "S1"
+    },
+    
+    {
+        "name": "Búsqueda de identidad de marcas completa",
+        "price": 150,
+        "description" : "Incluye análisis de registrabilidad con indicación de chances de éxito",
+        "image" : "./images/img-sv2.jpg",
+        "id" : "S2"
+    },
+
+    {
+        "name": "Orientación sobre requisitos legales y pasos para el registro",
+        "price": 300,
+        "description" : "Registro de marcas fácil y seguro con nuestra ayuda",
+        "image" : "./images/img-sv3.jpg",
+        "id" : "S3"
+    },
+    
+    {
+        "name": "Análisis de la distintividad y viabilidad de marca",
+        "price": 250,
+        "description" : "Registro de marcas fácil y seguro con nuestra ayuda",
+        "image" : "./images/img-sv4.jpg",
+        "id" : "S4"
+    }   
+]
