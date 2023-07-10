@@ -262,6 +262,16 @@ function handleBuyButtonClick() {
     return;
   }
 
+  function toggleElementsVisibility(visible) {
+    const cartTotalDiv = document.querySelector(".cart-total");
+    const buyButton = document.querySelector("#buyButton");
+    const clearCartButton = document.querySelector("#clearCartButton");
+
+    cartTotalDiv.hidden = !visible;
+    buyButton.hidden = !visible;
+    clearCartButton.hidden = !visible;
+  }
+
   // Generar el mensaje de compra
   const productList = [];
   const serviceList = [];
@@ -320,9 +330,17 @@ function handleBuyButtonClick() {
   const messageContainer = document.querySelector("#cartItems");
   if (messageContainer) {
     messageContainer.innerHTML = purchaseMessage;
+    toggleElementsVisibility(false);
   } else {
     console.error("No se pudo encontrar el contenedor 'cartItems'.");
   }
+  const newPurchaseButton = document.createElement("button");
+  newPurchaseButton.textContent = "Realizar una nueva compra";
+  newPurchaseButton.classList.add("btn", "btn-dark");
+  newPurchaseButton.addEventListener("click", () => {
+    location.reload();
+  });
+  messageContainer.appendChild(newPurchaseButton);
 }
 
 // Función para vaciar el carrito
