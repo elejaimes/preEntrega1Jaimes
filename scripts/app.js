@@ -181,6 +181,7 @@ function increaseQuantity(item) {
   item.quantity++;
   updateCartItemQuantity(item);
   updateCartStorage();
+  updateCartUI();
 }
 
 // Función para disminuir la cantidad del elemento en el carrito
@@ -189,6 +190,7 @@ function decreaseQuantity(item) {
     item.quantity--;
     updateCartItemQuantity(item);
     updateCartStorage();
+    updateCartUI();
   } else {
     Swal.fire({
       title: "¿Desea eliminar este producto del carrito?",
@@ -326,21 +328,40 @@ function handleBuyButtonClick() {
   localStorage.removeItem("cart");
   updateCartUI();
 
-  // Mostrar el mensaje en el DOM
+  // Mostrar el spinner
+  const spinner = document.createElement("div");
+  spinner.classList.add("spinner-border");
+  spinner.setAttribute("role", "status");
+
+  const spinnerText = document.createElement("span");
+  spinnerText.classList.add("sr-only");
+
+  spinner.appendChild(spinnerText);
+
+  // Agregar el spinner al contenedor
   const messageContainer = document.querySelector("#cartItems");
-  if (messageContainer) {
-    messageContainer.innerHTML = purchaseMessage;
-    toggleElementsVisibility(false);
-  } else {
-    console.error("No se pudo encontrar el contenedor 'cartItems'.");
-  }
-  const newPurchaseButton = document.createElement("button");
-  newPurchaseButton.textContent = "Realizar una nueva compra";
-  newPurchaseButton.classList.add("btn", "btn-dark");
-  newPurchaseButton.addEventListener("click", () => {
-    location.reload();
-  });
-  messageContainer.appendChild(newPurchaseButton);
+  messageContainer.appendChild(spinner);
+
+  // Ocultar elementos y mostrar el mensaje de compra después de 5 segundos
+  toggleElementsVisibility(false);
+  setTimeout(() => {
+    // Mostrar el mensaje en el DOM
+    const messageContainer = document.querySelector("#cartItems");
+    if (messageContainer) {
+      messageContainer.innerHTML = purchaseMessage;
+      toggleElementsVisibility(false);
+
+      const newPurchaseButton = document.createElement("button");
+      newPurchaseButton.textContent = "Realizar una nueva compra";
+      newPurchaseButton.classList.add("btn", "btn-dark");
+      newPurchaseButton.addEventListener("click", () => {
+        location.reload();
+      });
+      messageContainer.appendChild(newPurchaseButton);
+    } else {
+      console.error("No se pudo encontrar el contenedor 'cartItems'.");
+    }
+  }, 5000);
 }
 
 // Función para vaciar el carrito
